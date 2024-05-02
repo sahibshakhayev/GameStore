@@ -1,4 +1,4 @@
-function Admin() {
+function Games() {
 
   return (
     <>
@@ -7,4 +7,4 @@ function Admin() {
   )
 }
   
-export default Admin
+export default Games
