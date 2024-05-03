@@ -17,7 +17,7 @@ function Header() {
           <Typography.Title>Game Store</Typography.Title>
         </Flex></Link>
         <Flex gap='20px' className="nav-flex">
-          <Search placeholder="input search text" allowClear className="nav-search" style={{ width: 200 }} />
+          <Search placeholder="Search" allowClear className="nav-search" style={{ width: 200 }} />
           <Link to='/games'><Typography.Text className='nav-text'>Games</Typography.Text></Link>
           <Link to='/cart'><Flex gap='5px' onMouseEnter={() => { setIsHovered(true); }} onMouseLeave={() => { setIsHovered(false); }}>
             <img alt="cart" src={isHovered ? cartIconHover : cartIcon} className="cart-icon"/><Typography.Text className='nav-text' style={{color: (isHovered ? '#2f9dbe' : 'white')}}>Cart</Typography.Text>

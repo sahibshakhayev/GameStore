@@ -42,3 +42,8 @@ header{
 .game-card{
   background-color: #202020;
 }
+
+.cover{
+  height: '160px';
+  line-height: '160px';
+}
