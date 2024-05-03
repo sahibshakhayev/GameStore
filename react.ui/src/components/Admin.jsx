@@ -1,10 +1,10 @@
 function Admin() {
 
-    return (
-      <>
-      
-      </>
-    )
-  }
+  return (
+    <>
+    
+    </>
+  )
+}
   
 export default Admin
