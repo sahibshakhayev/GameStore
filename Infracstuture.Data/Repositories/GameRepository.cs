@@ -10,6 +10,7 @@ using SahibGameStore.Infracstuture.Data.Context;
 using SahibGameStore.Infracstuture.Data.Repositories.Common;
 using SahibGameStore.Domain.ValueObjects;
 using System.Numerics;
+using SahibGameStore.Domain;
 
 namespace SahibGameStore.Infracstuture.Data.Repositories
 {
@@ -166,9 +167,16 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
             _db.SaveChanges();
         }
 
-        public async Task<PaginatedList<Game>> GetPaginatedAll(int pageIndex, int pageSize, string search)
+        public async Task<PaginatedList<Game>> GetPaginatedAll(int pageIndex, int pageSize, string search, Filtrate filtrate)
         {
-            var games = await _db.Games.Where(p => p.Name.Contains(search))
+           
+
+
+
+            var games = await _db.Games.Where(p => p.Name.Contains(search)).Where(p => p.Price >= filtrate.minPrice && p.Price <= filtrate.maxPrice)
+            .Where(p => !String.IsNullOrEmpty(filtrate.CompanyId.ToString()) ? (p.GameDevelopers.FirstOrDefault(d => d.GameId == p.Id && d.DeveloperId == filtrate.CompanyId) != null) || (p.GamePublishers.FirstOrDefault(d => d.GameId == p.Id && d.PublisherId == filtrate.CompanyId) != null) : true)
+            .Where(p => !String.IsNullOrEmpty(filtrate.PlatformId.ToString()) ? (p.GamePlatforms.FirstOrDefault(pl => pl.GameId == p.Id && pl.PlatformId == filtrate.PlatformId) != null) : true)
+            .Where(p => !String.IsNullOrEmpty(filtrate.CompanyId.ToString()) ? (p.GameGenres.FirstOrDefault(g => g.GameId == p.Id && g.GenreId == filtrate.GenreId) != null) : true)
             .OrderBy(b => b.Id)
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize).Include(_ => _.GameDevelopers)
@@ -181,10 +189,18 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
                       .ThenInclude(_ => _.Publisher)
             .ToListAsync();
 
+
+
+
             var count = await _db.Games.CountAsync();
             var totalPages = (int)Math.Ceiling(count / (double)pageSize);
 
             return new PaginatedList<Game>(games, pageIndex, totalPages);
         }
+
+
+       
+
+
     }
 }

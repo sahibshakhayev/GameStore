@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using SahibGameStore.Domain.Entities;
 using SahibGameStore.Application.DTOS.Games;
 using SahibGameStore.Domain.ValueObjects;
+using SahibGameStore.Application.Commands;
+using SahibGameStore.Domain;
 
 namespace SahibGameStore.Application.Services
 {
@@ -82,9 +84,9 @@ namespace SahibGameStore.Application.Services
             return await _unit.Games.GetOverview(id);
         }
 
-        public async Task<PaginatedList<GameListViewModel>> GetAllGamesPaginated(int page_index, int page_size, string search)
+        public async Task<PaginatedList<GameListViewModel>> GetAllGamesPaginated(int page_index, int page_size, string search, Filtrate filtrate)
         {
-            return _mapper.Map<PaginatedList<GameListViewModel>>(await _unit.Games.GetPaginatedAll(page_index, page_size,search));
+            return _mapper.Map<PaginatedList<GameListViewModel>>(await _unit.Games.GetPaginatedAll(page_index, page_size,search, filtrate));
         }
     }
 }
