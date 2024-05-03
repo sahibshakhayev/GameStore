@@ -5,6 +5,7 @@ import Home from './components/Home'
 import Games from './components/Games'
 import Cart from './components/Cart'
 import Admin from './components/Admin'
+import Footer from './components/Footer'
 
 function App() {
 
