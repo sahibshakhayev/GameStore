@@ -45,11 +45,11 @@ namespace SahibGameStore.Domain.Entities.Common
                 if (Reviews?.Count > 0)
                     return Math.Round(Reviews.Sum(_ => _.Rating) / Reviews.Count, 1);
                 else
-                    return null;
+                    return 1;
             }
             set
             {
-                value = null;
+                value = 1;
             }
         }
 
