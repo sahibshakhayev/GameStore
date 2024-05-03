@@ -93,6 +93,7 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
                 {
                     cartItem.ChangeQuantityTo(cartItem.Quantity + 1);
                     _db.CartItems.Update(cartItem);
+     
 
                 }
                 var game = await _db.Games.FirstOrDefaultAsync(g => g.Id == product.Id);

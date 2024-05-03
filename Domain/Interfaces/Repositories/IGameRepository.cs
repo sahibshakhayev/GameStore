@@ -11,7 +11,7 @@ namespace SahibGameStore.Domain.Interfaces.Repositories
         IEnumerable<Game> SearchByName(string search);
         Task<IEnumerable<dynamic>> GetAllGamesWithDevelopersAsync();
 
-        Task<PaginatedList<Game>> GetPaginatedAll(int pageIndex, int pageSize, string search);
+        Task<PaginatedList<Game>> GetPaginatedAll(int pageIndex, int pageSize, string search, Filtrate filtrate);
         Task<IEnumerable<Game>> GetAllGamesFromThisGenreAsync(Guid genreId);
         Task<IEnumerable<Game>> GetBestRatedGamesAsync();
         Task<IEnumerable<Game>> GetBestSellerGamesAsync();

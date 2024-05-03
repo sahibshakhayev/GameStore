@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Net.Http.Headers;
 using SahibGameStore.Domain.ValueObjects;
+using SahibGameStore.Application.Commands;
+using SahibGameStore.Domain;
 
 namespace SahibGameStore.WebAPI.Controllers
 {
@@ -28,7 +30,7 @@ namespace SahibGameStore.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<PaginatedList<GameListViewModel>> Get(int page_index, int page_size, string? search)
+        public async Task<PaginatedList<GameListViewModel>> Get(int page_index, int page_size, string? search, Filtrate filtrate)
         {
             if (page_index <= 0)
             {
@@ -41,7 +43,7 @@ namespace SahibGameStore.WebAPI.Controllers
             }
 
 
-            return await _services.GetAllGamesPaginated(page_index, page_size, search != null && search != String.Empty ? search : "");
+            return await _services.GetAllGamesPaginated(page_index, page_size, search != null && search != String.Empty ? search : "", filtrate);
         }
 
         [HttpGet("listbygenre/{genreId}")]
@@ -70,7 +72,7 @@ namespace SahibGameStore.WebAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Post([FromBody]AddOrUpdateGameDTO game)
+        public ActionResult Post([FromBody] AddOrUpdateGameDTO game)
         {
             var id = _services.InsertGame(game);
             if (id != null)
@@ -85,7 +87,7 @@ namespace SahibGameStore.WebAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut]
-        public void Update([FromBody]AddOrUpdateGameDTO game)
+        public void Update([FromBody] AddOrUpdateGameDTO game)
         {
             _services.UpdateGame(game);
         }
@@ -132,7 +134,7 @@ namespace SahibGameStore.WebAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("overview")]
-        public async Task<ActionResult> Overview([FromBody]AddOrUpdateGameOverviewDTO model)
+        public async Task<ActionResult> Overview([FromBody] AddOrUpdateGameOverviewDTO model)
         {
             try
             {
@@ -150,5 +152,8 @@ namespace SahibGameStore.WebAPI.Controllers
         {
             return await _services.GetOverview(id);
         }
+
+
+       
     }
 }
