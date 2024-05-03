@@ -28,23 +28,13 @@ namespace SahibGameStore.WebAPI.Controllers
         }
         [Authorize(Roles = "Customer")]
         [HttpGet]
-        public async Task<ActionResult<ShoppingCart>> GetUserCart()
+        public async Task<ShoppingCartViewModel> GetUserCart()
         {
-            try
-            {
+            
                 
-                var cart = await _cartServices.GetUserCart(Guid.Parse(_userManager.GetUserId(User)));
-                if (cart == null)
-                {
-                    return NotFound("No cart found for this user.");
-                }
-                return Ok(cart);
-            }
-            catch (Exception ex)
-            {
-                var user = _userManager.GetUserAsync(HttpContext.User);
-                return StatusCode(500, ex.Message);
-            }
+            return await _cartServices.GetUserCart(Guid.Parse(_userManager.GetUserId(User)));
+                
+            
         }
 
         [Authorize(Roles = "Customer")]

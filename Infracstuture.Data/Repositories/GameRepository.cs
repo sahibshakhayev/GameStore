@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System;
 using SahibGameStore.Infracstuture.Data.Context;
 using SahibGameStore.Infracstuture.Data.Repositories.Common;
+using SahibGameStore.Domain.ValueObjects;
+using System.Numerics;
 
 namespace SahibGameStore.Infracstuture.Data.Repositories
 {
@@ -162,6 +164,27 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
                 go.changeHtml(gameOverview.Html);
 
             _db.SaveChanges();
+        }
+
+        public async Task<PaginatedList<Game>> GetPaginatedAll(int pageIndex, int pageSize, string search)
+        {
+            var games = await _db.Games.Where(p => p.Name.Contains(search))
+            .OrderBy(b => b.Id)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize).Include(_ => _.GameDevelopers)
+                      .ThenInclude(_ => _.Developer)
+                      .Include(_ => _.GameGenres)
+                      .ThenInclude(_ => _.Genre)
+                      .Include(_ => _.GamePlatforms)
+                      .ThenInclude(_ => _.Platform)
+                      .Include(_ => _.GamePublishers)
+                      .ThenInclude(_ => _.Publisher)
+            .ToListAsync();
+
+            var count = await _db.Games.CountAsync();
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            return new PaginatedList<Game>(games, pageIndex, totalPages);
         }
     }
 }
