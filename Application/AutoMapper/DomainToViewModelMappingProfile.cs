@@ -4,6 +4,7 @@ using SahibGameStore.Domain.Entities.Common;
 using SahibGameStore.Application.ViewModels;
 using SahibGameStore.Domain.Entities;
 using System.Reflection.Metadata;
+using SahibGameStore.Domain.ValueObjects;
 
 namespace SahibGameStore.Application.AutoMapper
 {
@@ -21,6 +22,8 @@ namespace SahibGameStore.Application.AutoMapper
             CreateMap<Platform, PlatformViewModel>();
             CreateMap<Review, ReviewListViewModel>();
             CreateMap<Order,OrderListViewModel>();
+            CreateMap<ShoppingCart, ShoppingCartViewModel>();
+            CreateMap<PaginatedList<Game>, PaginatedList<GameListViewModel>>();
             
         }   
     }

@@ -48,9 +48,9 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
         }
 
 
-        public Task <ShoppingCart> GetCartByUserId(Guid userId)
+        public async Task <ShoppingCart> GetCartByUserId(Guid userId)
         {
-            return _db.ShoppingCarts.Where(_ => _.UserId == userId).FirstOrDefaultAsync();
+            return await _db.ShoppingCarts.Include(ci => ci._listOfItems).ThenInclude(i => i.Product).Where(c => c.UserId == userId).FirstOrDefaultAsync();
         }
 
         public async Task CreateCart(ShoppingCart cart)
@@ -59,13 +59,15 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
             _db.SaveChanges();
         }
 
-        public ShoppingCart GetActiveShoppingCartByUser(Guid userId)
+        public async Task<ShoppingCart> GetActiveShoppingCartByUser(Guid userId)
         {
-            return _db.ShoppingCarts.Where(c => c.UserId == userId).Include(ci => ci._listOfItems).ToList().FirstOrDefault();
 
 
-           
-            
+            return await _db.ShoppingCarts.Include(ci => ci.ListOfItems).ThenInclude(i => i.Product).Where(c => c.UserId == userId).FirstOrDefaultAsync();
+
+
+
+
         }
 
         public async Task AddItemtoCart(ShoppingCart currentCart, Product product)
@@ -76,10 +78,26 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
             {
                
 
-                CartItem cartItem = new CartItem(product, 1);
+                CartItem cartItem = _db.CartItems.FirstOrDefault(c => c.ProductId == product.Id);
 
-                currentCart._listOfItems.Add(cartItem);
-                await _db.CartItems.AddAsync(cartItem);
+                if (cartItem == null)
+                {
+                    cartItem = new CartItem(product, 1);
+                    currentCart._listOfItems.Add(cartItem);
+                    await _db.CartItems.AddAsync(cartItem);
+
+                }
+
+
+                else
+                {
+                    cartItem.ChangeQuantityTo(cartItem.Quantity + 1);
+                    _db.CartItems.Update(cartItem);
+
+                }
+                var game = await _db.Games.FirstOrDefaultAsync(g => g.Id == product.Id);
+                game.ChangeAvailableQuantity(game.AvailableQuantity - 1);
+                _db.Update(game);
                 _db.SaveChanges();
 
 
@@ -99,6 +117,9 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
 
                currentCart._listOfItems.Remove(item);
                 _db.CartItems.Remove(item);
+                var game = await _db.Games.FirstOrDefaultAsync(g => g.Id == item.ProductId);
+                game.ChangeAvailableQuantity(game.AvailableQuantity + 1);
+                _db.Update(game);
                 _db.SaveChanges();
 
 
@@ -119,6 +140,7 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
 
                 currentCart._listOfItems.FirstOrDefault(x => x.Id == item.Id).ChangeQuantityTo(item.Quantity);
                 _db.CartItems.Update(item);
+
                 _db.SaveChanges();
 
 

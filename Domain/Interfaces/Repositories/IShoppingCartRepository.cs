@@ -9,7 +9,7 @@ namespace SahibGameStore.Domain.Interfaces.Repositories
     {
         Task<ShoppingCart> GetCartByUserId(Guid userId);
 
-        ShoppingCart GetActiveShoppingCartByUser(Guid userId);
+        Task <ShoppingCart> GetActiveShoppingCartByUser(Guid userId);
         Task CreateCart(ShoppingCart currentCart);
 
         Task AddItemtoCart(ShoppingCart currentCart, Product product);

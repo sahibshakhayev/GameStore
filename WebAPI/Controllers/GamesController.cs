@@ -11,6 +11,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Net.Http.Headers;
+using SahibGameStore.Domain.ValueObjects;
 
 namespace SahibGameStore.WebAPI.Controllers
 {
@@ -27,9 +28,20 @@ namespace SahibGameStore.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<GameListViewModel>> Get()
+        public async Task<PaginatedList<GameListViewModel>> Get(int page_index, int page_size, string? search)
         {
-            return await _services.GetAllGames();
+            if (page_index <= 0)
+            {
+                page_index = 1;
+            }
+
+            if (page_size <= 0)
+            {
+                page_size = 1;
+            }
+
+
+            return await _services.GetAllGamesPaginated(page_index, page_size, search != null && search != String.Empty ? search : "");
         }
 
         [HttpGet("listbygenre/{genreId}")]

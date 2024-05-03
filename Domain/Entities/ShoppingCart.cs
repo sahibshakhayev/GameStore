@@ -48,12 +48,14 @@ namespace SahibGameStore.Domain.Entities
 
         
         
-        public IEnumerable<CartItem> ListOfItems
+        public ICollection<CartItem> ListOfItems
         {
             get
             {
                 return _listOfItems.ToList();
             }
+
+            private set { ListOfItems = value; }
         }
 
         public void AddItem(IList<CartItem> listOfItems)
@@ -67,7 +69,7 @@ namespace SahibGameStore.Domain.Entities
                 }
                 if (!AlreadyContainThisItem(item))
                 {
-                    _listOfItems.Add(item);
+                    _listOfItems.Append(item);
                 }
                 else
                 {
@@ -86,7 +88,7 @@ namespace SahibGameStore.Domain.Entities
             }
             if (!AlreadyContainThisItem(item))
             {
-                _listOfItems.Add(item);
+                _listOfItems.Append(item);
             }
             else
             {
@@ -111,7 +113,7 @@ namespace SahibGameStore.Domain.Entities
 
         public void RemoveItem(CartItem item)
         {
-            _listOfItems.Remove(item);
+            _listOfItems.Add(item);
         }
 
         public bool AlreadyContainThisItem(CartItem item)
