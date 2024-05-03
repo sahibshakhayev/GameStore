@@ -10,6 +10,7 @@ using SahibGameStore.Domain.Entities.Common;
 using System.Data.Entity.Infrastructure;
 using Serilog;
 using System.Data;
+using SahibGameStore.Application.ViewModels;
 
 namespace SahibGameStore.Application.Services
 {
@@ -28,23 +29,24 @@ namespace SahibGameStore.Application.Services
 
 
 
-        public async Task<ShoppingCart> GetUserCart(Guid userId)
+        public async Task<ShoppingCartViewModel> GetUserCart(Guid userId)
         {
-          var currentCart = _unit.Carts.GetActiveShoppingCartByUser(userId);
+          var currentCart = await _unit.Carts.GetActiveShoppingCartByUser(userId);
 
             if (currentCart is null)
             {
-                throw new ApplicationException("No Cart!");
+                currentCart = new ShoppingCart(userId);
+                await _unit.Carts.CreateCart(currentCart);
             }
 
-            return currentCart;
+            return _mapper.Map<ShoppingCartViewModel>(currentCart);
 
 
         }
 
         public async Task AddItemToCart(CartItemDTO item, Guid userId)
         {
-            var currentCart = _unit.Carts.GetActiveShoppingCartByUser(userId);
+            var currentCart = await _unit.Carts.GetActiveShoppingCartByUser(userId);
 
             if (currentCart is null)
             {
@@ -83,7 +85,7 @@ namespace SahibGameStore.Application.Services
 
         public async Task RemoveItemFromCart(CartItemDTO item, Guid userId)
         {
-            ShoppingCart CurrentCart = _unit.Carts.GetActiveShoppingCartByUser(userId);
+            ShoppingCart CurrentCart = await _unit.Carts.GetActiveShoppingCartByUser(userId);
 
             if (CurrentCart is null)
             {
@@ -110,7 +112,7 @@ namespace SahibGameStore.Application.Services
 
         public async Task SetItemQuantity(CartItemDTO item, Guid UserId, int newQuantity)
         {
-            ShoppingCart CurrentCart = _unit.Carts.GetActiveShoppingCartByUser(UserId);
+            ShoppingCart CurrentCart = await _unit.Carts.GetActiveShoppingCartByUser(UserId);
 
             if (CurrentCart is null)
             {

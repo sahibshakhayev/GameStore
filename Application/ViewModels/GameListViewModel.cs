@@ -15,6 +15,8 @@ namespace SahibGameStore.Application.ViewModels
         public string Name { get; set; }
         public DateTime ReleaseDate { get; set; }
         public double? UsersScore { get; set; }
+
+        public double Price { get; set; }
         public string ShortDescription { get; set; }
         public string ImageRelativePath { get; set; }
         public string CoverImageRelativePath { get; set; }

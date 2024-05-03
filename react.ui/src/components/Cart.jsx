@@ -1,10 +1,10 @@
 function Cart() {
 
-    return (
-      <>
-      
-      </>
-    )
-  }
+  return (
+    <>
+    
+    </>
+  )
+}
   
 export default Cart
