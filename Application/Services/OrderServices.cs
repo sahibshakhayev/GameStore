@@ -47,9 +47,9 @@ namespace SahibGameStore.Application.Services
             return new CommandResult(false, "Order not found!");
 
         }
-        public CommandResult FinishCreditCardOrder(FinishCreditCardOrderCommand command, Guid UserId)
+        public async Task<CommandResult> FinishCreditCardOrder(FinishCreditCardOrderCommand command, Guid UserId)
         {
-            var email = new Email(command.Email);
+            Email email = new Email(_unit.Users.GetById(UserId).Name);
 
             var payment = new CreditCardPayment(
                command.CardHolderName,
@@ -61,24 +61,37 @@ namespace SahibGameStore.Application.Services
                command.Payer,
                email);
 
-            var cart = new ShoppingCart(UserId ,command.ListOfItems);
+
+
+
+            var cart = await _unit.Carts.GetCartByUserId(UserId);
 
             var order = new Order(UserId, cart, payment);
 
             order.AddNonconformity(payment, cart);
 
             if (order.IsInvalid)
+            {
                 return new CommandResult(false, "Can't finish the order request.");
+            }
 
             _unit.Orders.CreateOrder(order);
+
+
+
+            cart.Deactivate();
+
+           _unit.Carts.Update(cart);
+
+            _unit.SaveChanges();
 
             return new CommandResult(true, "Order finished with success.");
         }
 
-        public CommandResult FinishPayPalOrder(FinishPayPalOrderCommand command, Guid UserId)
+        public async  Task<CommandResult> FinishPayPalOrder(FinishPayPalOrderCommand command, Guid UserId)
         {
-            var email = new Email(command.Email);
 
+            Email email = new Email(_unit.Users.GetById(UserId).Name);
             var payment = new PayPalPayment(
                command.TransactionCode,
                command.PaidDate,
@@ -88,7 +101,8 @@ namespace SahibGameStore.Application.Services
                command.Payer,
                email);
 
-            var cart = new ShoppingCart(UserId,command.ListOfItems);
+
+            var cart = await _unit.Carts.GetCartByUserId(UserId);
 
             var order = new Order(UserId, cart, payment);
 
@@ -98,6 +112,14 @@ namespace SahibGameStore.Application.Services
                 return new CommandResult(false, "Can't finish the order request.");
 
             _unit.Orders.CreateOrder(order);
+
+
+            cart.Deactivate();
+
+            _unit.Carts.Update(cart);
+
+            _unit.SaveChanges();
+
 
             return new CommandResult(true, "Order finished with success.");
         }
