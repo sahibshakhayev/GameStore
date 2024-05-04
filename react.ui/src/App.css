@@ -24,10 +24,6 @@ header{
   color: #2f9dbe;
 }
 
-.nav-search{
-  color: black;
-}
-
 .main-logo{
   height: 65px;
   margin-top: -8px;
@@ -39,11 +35,27 @@ header{
 
 /*                           */
 
-.game-card{
-  background-color: #202020;
-}
-
 .cover{
   height: '160px';
   line-height: '160px';
+}
+
+.catalog-search{
+  color: black;
+}
+
+/*                           */
+
+.footer-container {
+  margin: -1rem -2rem 0;
+  position: fixed;
+  width: 100%;
+  padding: 10px 100px;
+  background-color: #202020;
+  color: #FFFFFF;
+  bottom: 0;
+}
+
+.footer-title {
+  border-bottom: #333333 1px solid;
 }
