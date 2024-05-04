@@ -50,7 +50,7 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
 
         public async Task <ShoppingCart> GetCartByUserId(Guid userId)
         {
-            return await _db.ShoppingCarts.Include(ci => ci._listOfItems).ThenInclude(i => i.Product).Where(c => c.UserId == userId).FirstOrDefaultAsync();
+            return await _db.ShoppingCarts.Include(ci => ci._listOfItems).ThenInclude(i => i.Product).Where(c => c.UserId == userId && c.Active == true).FirstOrDefaultAsync();
         }
 
         public async Task CreateCart(ShoppingCart cart)

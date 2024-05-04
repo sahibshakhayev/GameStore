@@ -24,6 +24,8 @@ namespace SahibGameStore.Domain.Entities
 
         public Guid UserId { get; private set; }
         public Payment FormOfPayment { get; private set; }
+
+        public string? Address { get; set; }
         public Guid ShoppingCartId { get; private set; }
         [ForeignKey("ShoppingCartId")]
         public ShoppingCart ShoppingCart { get; private set; }
