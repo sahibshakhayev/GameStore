@@ -171,13 +171,19 @@ namespace SahibGameStore.Infracstuture.Data.Context
                 new ShoppingCart(new Guid(userId2.Id))
             };
 
-            shoppingCarts[0].AddItem(new CartItem(games[0], 1));
-            shoppingCarts[0].AddItem(new CartItem(games[1], 1));
-            shoppingCarts[0].AddItem(new CartItem(games[3], 1));
 
-            shoppingCarts[1].AddItem(new CartItem(games[0], 1));
-            shoppingCarts[1].AddItem(new CartItem(games[2], 1));
-            shoppingCarts[1].AddItem(new CartItem(games[3], 1));
+
+            var item1 = new CartItem(games[0], 1);
+            var item2 = new CartItem(games[2], 1);
+            var item3 = new CartItem(games[3], 1);
+            var item4 = new CartItem(games[1], 1);
+
+
+           
+
+
+
+
 
             
 
@@ -196,14 +202,42 @@ namespace SahibGameStore.Infracstuture.Data.Context
             order1.Deactivate();
             order2.Deactivate();
 
+
+    
+
            
 
+            
 
+
+           
 
             foreach (ShoppingCart c in shoppingCarts)
             {
                 context.ShoppingCarts.Add(c);
             }
+
+
+
+            shoppingCarts[0]._listOfItems.Add(item1);
+            shoppingCarts[0]._listOfItems.Add(item2);
+            shoppingCarts[0]._listOfItems.Add(item3);
+
+            shoppingCarts[1]._listOfItems.Add(item1);
+            shoppingCarts[1]._listOfItems.Add(item4);
+            shoppingCarts[1]._listOfItems.Add(item2);
+
+
+
+            context.CartItems.Add(item1);
+            context.CartItems.Add(item2);
+            context.CartItems.Add(item3);
+            context.CartItems.Add(item4);
+
+
+
+
+
 
             context.Orders.Add(order1);
             context.Orders.Add(order2);
@@ -298,8 +332,6 @@ namespace SahibGameStore.Infracstuture.Data.Context
             var token = new Token(Guid.NewGuid(), String.Empty, String.Empty);
 
             context.Tokens.Add(token);
-
-
 
 
             context.SaveChanges();

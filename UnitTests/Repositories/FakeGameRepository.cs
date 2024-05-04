@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SahibGameStore.Domain.ValueObjects;
+using SahibGameStore.Domain;
 
 namespace SahibGameStore.UnitTests.Repositories
 {
@@ -61,6 +63,11 @@ namespace SahibGameStore.UnitTests.Repositories
         }
 
         public Task<GameOverview> GetOverview(Guid gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PaginatedList<Game>> GetPaginatedAll(int pageIndex, int pageSize, string search, Filtrate filtrate)
         {
             throw new NotImplementedException();
         }

@@ -17,21 +17,33 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
 
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await _db.Orders.Include(_ => _.ShoppingCart).ThenInclude(sc => sc.ListOfItems).ThenInclude(ci => ci.Product).ToListAsync();
+            return await _db.Orders.Include(_ => _.ShoppingCart).ThenInclude(sc => sc.ListOfItems).ThenInclude(ci => ci.Product).Include(py => py.FormOfPayment).ToListAsync();
         }
 
         public async Task<IEnumerable<Order>> GetByUserIdAsync(Guid id)
         {
-            return await _db.Orders.Include(_ => _.ShoppingCart).ThenInclude(sc => sc.ListOfItems).ThenInclude(ci => ci.Product).Where(_ => _.UserId == id).ToListAsync();
+            return await _db.Orders.Include(_ => _.ShoppingCart).ThenInclude(sc => sc.ListOfItems).ThenInclude(ci => ci.Product).Include(py => py.FormOfPayment).Where(_ => _.UserId == id).ToListAsync();
         }
 
         public int CancelOrder(Guid orderId)
         {
-            var order = _db.Orders.FirstOrDefault(o => o.Id == orderId);
+            var order = _db.Orders.Include(_ => _.ShoppingCart).ThenInclude(sc => sc.ListOfItems).ThenInclude(ci => ci.Product).FirstOrDefault(o => o.Id == orderId);
 
             if (order != null)
             {
-                _db.Orders.Remove(order);
+                order.Deactivate();
+
+                foreach (var item in order.ShoppingCart.ListOfItems)
+                {
+                    var p = _db.Games.FirstOrDefault(g => g.Id == item.Product.Id);
+
+                    if(p != null)
+                    {
+                        p.ChangeAvailableQuantity(p.AvailableQuantity + item.Quantity);
+                        _db.Games.Update(p);
+                    }
+                }
+                _db.Orders.Update(order);
                 _db.SaveChanges();
                 return 0;
             }
