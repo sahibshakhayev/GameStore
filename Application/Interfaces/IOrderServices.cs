@@ -13,7 +13,7 @@ namespace SahibGameStore.Application.Interfaces
 
 
         CommandResult CancelOrder(Guid orderId, Guid userId);
-        CommandResult FinishCreditCardOrder (FinishCreditCardOrderCommand order, Guid UserId);
-        CommandResult FinishPayPalOrder (FinishPayPalOrderCommand order, Guid UserId);
+       Task<CommandResult> FinishCreditCardOrder (FinishCreditCardOrderCommand order, Guid UserId);
+        Task<CommandResult> FinishPayPalOrder (FinishPayPalOrderCommand order, Guid UserId);
     }
 }

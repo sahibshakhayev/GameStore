@@ -38,7 +38,7 @@ namespace SahibGameStore.WebAPI.Controllers
             var userFind = _userManager.Users.FirstOrDefault(u => u.UserName == _userManager.GetUserId(HttpContext.User));
    
             //todo create handler
-            return await  _services.GetAllOrdersbyUser(Guid.Parse(userFind.Id));
+            return await  _services.GetAllOrdersbyUser(Guid.Parse(_userManager.GetUserId(User)));
         }
 
 
@@ -46,7 +46,7 @@ namespace SahibGameStore.WebAPI.Controllers
 
         [Authorize(Roles = "Customer")]
         [HttpPost]
-        public CommandResult FinishCreditCardOrder([FromBody]FinishCreditCardOrderCommand order)
+        public Task<CommandResult> FinishCreditCardOrder([FromBody]FinishCreditCardOrderCommand order)
         {
             //todo create handler
             return _services.FinishCreditCardOrder(order, Guid.Parse(_userManager.GetUserId(HttpContext.User)));
@@ -59,7 +59,7 @@ namespace SahibGameStore.WebAPI.Controllers
 
         [Authorize(Roles = "Customer")]
         [HttpPost]
-        public CommandResult FinishPayPalOrder([FromBody]FinishPayPalOrderCommand order)
+        public Task<CommandResult> FinishPayPalOrder([FromBody]FinishPayPalOrderCommand order)
         {
             //todo create handler
             return _services.FinishPayPalOrder(order, Guid.Parse(_userManager.GetUserId(HttpContext.User)));
@@ -71,7 +71,7 @@ namespace SahibGameStore.WebAPI.Controllers
         public CommandResult CancelOrder(Guid orderId)
         {
             //todo create handler
-            return _services.CancelOrder(orderId, Guid.Parse(_userManager.GetUserId(HttpContext.User)));
+            return _services.CancelOrder(orderId, Guid.Parse(_userManager.GetUserId(User)));
         }
     }
 }
