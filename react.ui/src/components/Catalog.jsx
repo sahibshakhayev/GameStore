@@ -1,4 +1,5 @@
-import { Card, List, Typography, Rate, Input, Flex, Select } from "antd"
+import { Card, List, Typography, Input, Flex, Select } from "antd"
+import { Link } from "react-router-dom"
 import { LoadingOutlined } from '@ant-design/icons'
 import { useGetAllGamesQuery, useGetByGenreGamesQuery } from "../redux/apiGames"
 import { useGetAllGenresQuery } from "../redux/apiGenres"
@@ -60,10 +61,11 @@ function Catalog() {
       style={{ marginTop: 50 }}
       renderItem={(item) => (
       <List.Item>
+        <Link to={"/games/" + item.id}>
         <Card hoverable style={{ width: 200, borderColor: "#202020", backgroundColor: "#202020" }}
           cover={<img src={"https://localhost:7017" + item.imageRelativePath}/>}>
           <Card.Meta title={item.name} description={
-            <Typography.Paragraph style={{ marginBottom: 15 }} ellipsis={{ rows: 4, expandable: "collapsible"}}>
+            <Typography.Paragraph style={{ marginBottom: 15 }} ellipsis={{ rows: 4, expandable: false }}>
               {item.shortDescription}
             </Typography.Paragraph>}
           />
@@ -72,12 +74,12 @@ function Catalog() {
             "center", marginTop: 0, marginBottom: 15,
             textShadow: "#999955 0 0 25px" }}>
             {item.price + "$"}
-          </Typography.Paragraph>
-          <Rate disabled allowHalf defaultValue={item.usersScore} style={{ marginBottom: 15 }}/>
+          </Typography.Paragraph>          
           <Typography.Paragraph style={{ color: "#999", fontSize: 12, textAlign: "end", marginBottom: -15, marginRight: -10 }}>
             {item.releaseDate.substr(0, 10)}
           </Typography.Paragraph>
         </Card>
+        </Link>
       </List.Item>)}>
     </List>}
     </>    

@@ -46,6 +46,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           colorPrimaryBorder: "#2f9dbe",
           colorPrimaryHover: "#2f9dbe",
           colorPrimaryActive: "#2f9dbe"
+        },
+        Button: {
+          colorPrimary: "linear-gradient(90deg, #507a5b 0%, #113a46 100%)",
+          colorPrimaryHover: "linear-gradient(90deg, #678c6f 0%, #234c58 100%)",
+          colorPrimaryActive: "linear-gradient(90deg, #407a4b 0%, #004a76 100%)",
+          primaryColor: "#ddffff"
+        },
+        Rate: {
+          starBg: "#111",
+          starSize: 30
+        },
+        Divider: {
+          colorSplit: "#888"
+        },
+        Empty: {
+          colorTextDescription: "#FAFAFA"
         }
       }
     }}>

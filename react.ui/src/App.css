@@ -1,7 +1,7 @@
 #root {
   width: 100%;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 0;
   text-align: center;
 }
 
@@ -47,10 +47,9 @@ header{
 /*                           */
 
 .footer-container {
-  margin: -1rem -2rem 0;
-  position: fixed;
-  width: 100%;
-  padding: 10px 100px;
+  margin: 0 -2rem;
+  position: static;
+  padding: 20px;
   background-color: #202020;
   color: #FFFFFF;
   bottom: 0;
