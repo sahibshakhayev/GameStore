@@ -1,14 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-import gamesSlice from "./reducerGames"
-import gamesBestsellersSlice from "./reducerGamesBestsellers"
-import gamesBestratedSlice from "./reducerGamesBestrated"
+import { configureStore } from '@reduxjs/toolkit'
+import { gameStoreApi } from "./api"
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 let applicationStore = configureStore({
     reducer:{
-        games: gamesSlice,
-        gamesBestsellers: gamesBestsellersSlice,
-        gamesBestrated: gamesBestratedSlice
-    }
+        [gameStoreApi.reducerPath]: gameStoreApi.reducer
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(gameStoreApi.middleware)
 })
+
+setupListeners(applicationStore.dispatch);
 
 export default applicationStore;
