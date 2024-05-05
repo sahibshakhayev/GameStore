@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using SahibGameStore.Domain.Entities.Common;
+using System.Net.Mail;
 
 namespace Application.Interfaces
 {
@@ -16,5 +17,6 @@ namespace Application.Interfaces
     {
 
         Task<object> SendEmailAsync(string email, string subject, string message);
+        Task<object> SendEmailRawAsync(string email, string subject, MailMessage mailMessage);
     }
 }

@@ -173,20 +173,20 @@ namespace SahibGameStore.Infracstuture.Data.Repositories
 
 
 
-            var games = await _db.Games.Where(p => p.Name.Contains(search)).Where(p => p.Price >= filtrate.minPrice && p.Price <= filtrate.maxPrice)
-            .Where(p => !String.IsNullOrEmpty(filtrate.CompanyId.ToString()) ? (p.GameDevelopers.FirstOrDefault(d => d.GameId == p.Id && d.DeveloperId == filtrate.CompanyId) != null) || (p.GamePublishers.FirstOrDefault(d => d.GameId == p.Id && d.PublisherId == filtrate.CompanyId) != null) : true)
-            .Where(p => !String.IsNullOrEmpty(filtrate.PlatformId.ToString()) ? (p.GamePlatforms.FirstOrDefault(pl => pl.GameId == p.Id && pl.PlatformId == filtrate.PlatformId) != null) : true)
-            .Where(p => !String.IsNullOrEmpty(filtrate.CompanyId.ToString()) ? (p.GameGenres.FirstOrDefault(g => g.GameId == p.Id && g.GenreId == filtrate.GenreId) != null) : true)
-            .OrderBy(b => b.Id)
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize).Include(_ => _.GameDevelopers)
+            var games = await _db.Games.Include(_ => _.GameDevelopers)
                       .ThenInclude(_ => _.Developer)
                       .Include(_ => _.GameGenres)
                       .ThenInclude(_ => _.Genre)
                       .Include(_ => _.GamePlatforms)
                       .ThenInclude(_ => _.Platform)
                       .Include(_ => _.GamePublishers)
-                      .ThenInclude(_ => _.Publisher)
+                      .ThenInclude(_ => _.Publisher).Where(p => p.Name.Contains(search)).Where(p => p.Price >= filtrate.minPrice && p.Price <= filtrate.maxPrice)
+            .Where(p => !String.IsNullOrEmpty(filtrate.CompanyId.ToString()) ? (p.GameDevelopers.FirstOrDefault(d => d.GameId == p.Id && d.DeveloperId == filtrate.CompanyId) != null) || (p.GamePublishers.FirstOrDefault(d => d.GameId == p.Id && d.PublisherId == filtrate.CompanyId) != null) : true)
+            .Where(p => !String.IsNullOrEmpty(filtrate.PlatformId.ToString()) ? (p.GamePlatforms.FirstOrDefault(pl => pl.GameId == p.Id && pl.PlatformId == filtrate.PlatformId) != null) : true)
+            .Where(p => !String.IsNullOrEmpty(filtrate.CompanyId.ToString()) ? (p.GameGenres.FirstOrDefault(g => g.GameId == p.Id && g.GenreId == filtrate.GenreId) != null) : true)
+            .OrderBy(b => b.Id)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
 
 
