@@ -58,6 +58,27 @@ public class EmailServices:IEmailServices
 
         
     }
+
+
+    public async Task<object> SendEmailRawAsync(string email, string subject, MailMessage mailMessage)
+    {
+
+        try
+        {
+            await _smtpClient.SendMailAsync(mailMessage);
+            return "OK";
+
+        }
+
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Error", ex);
+
+        }
+
+
+    }
+
 }
 
  

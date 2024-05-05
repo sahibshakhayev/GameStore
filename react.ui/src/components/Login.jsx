@@ -1,36 +1,37 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './LoginSignUp.css'; 
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import './LoginSignUp.css'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser } from '../redux/accountSlice'
+import { LoadingOutlined } from '@ant-design/icons'
 
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+    const { loading, userInfo, error } = useSelector((state) => state.account);
+    const dispatch = useDispatch();
+    const { register, handleSubmit } = useForm();
+  
+    const submitForm = (data) => {
+      dispatch(loginUser(data));
+    }
 
-    const { email, password } = formData;
+    const navigate = useNavigate();
 
-    const handleChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        console.log(formData); 
-    };
+    useEffect(() => {
+        userInfo? navigate('/') : 0
+    }, [userInfo, navigate]);
 
     return (
         <div className="container">
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(submitForm)}>
                 <div className="form-group">
                     <input
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={email}
-                        onChange={handleChange}
+                        type="text"
+                        placeholder="Username"
+                        name="name"
+                        {...register('userName')}
                         required
                     />
                 </div>
@@ -39,13 +40,14 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         name="password"
-                        value={password}
-                        onChange={handleChange}
+                        {...register('password')}
                         minLength="6"
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" disabled={loading}>
+                    {loading? <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/> : "Login"}
+                </button>
             </form>
             <p>
                 <Link to="/forgot-password">Forgot Password?</Link>
@@ -54,7 +56,7 @@ const Login = () => {
                 Don't have an account? <Link to="/register">Register</Link>
             </p>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login

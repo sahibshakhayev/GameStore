@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './LoginSignUp.css'; 
+import React from 'react'
+import { Link } from 'react-router-dom'
+import './LoginSignUp.css'
 
 const ForgotPassword = () => {
     return (
@@ -14,10 +14,10 @@ const ForgotPassword = () => {
                 <button>Reset Password</button>
             </form>
             <p className="text-center">
-                <Link to="/">Back to Login</Link>
+                <Link to="/login">Back to Login</Link>
             </p>
         </div>
-    );
-};
+    )
+}
 
-export default ForgotPassword;
+export default ForgotPassword

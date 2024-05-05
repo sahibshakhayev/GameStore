@@ -18,10 +18,13 @@ export const gameApi = gameStoreApi.injectEndpoints({
     }),
     getByGenreGames: builder.query({
       query: (genreId) => `Games/listbygenre/${genreId}`,
+    }),
+    getByIdGames: builder.query({
+      query: (gameId) => `Games/${gameId}`,
     })
   }),
   overrideExisting: false
 })
 
-export const { useGetAllGamesQuery, useGetBestratedGamesQuery, useGetBestsellersGamesQuery, useGetByGenreGamesQuery } = gameApi
+export const { useGetAllGamesQuery, useGetBestratedGamesQuery, useGetBestsellersGamesQuery, useGetByGenreGamesQuery, useGetByIdGamesQuery } = gameApi
 

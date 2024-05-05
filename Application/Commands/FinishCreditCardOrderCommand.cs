@@ -12,6 +12,8 @@ namespace SahibGameStore.Application.Commands
         public string CardHolderName { get; set; }
         public string CardNumber { get; set; }
       
+
+        public string Email { get; set; }
         public string Payer {  get; set; }
         public DateTime PaidDate { get; set; }
         public DateTime ExpireDate { get; set; }
