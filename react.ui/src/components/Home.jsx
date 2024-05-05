@@ -1,4 +1,5 @@
-import { Card, List, Typography, Rate, Carousel } from "antd"
+import { Card, List, Typography, Rate } from "antd"
+import { Link } from "react-router-dom"
 import { useGetBestratedGamesQuery } from "../redux/apiGames"
 import { LoadingOutlined } from '@ant-design/icons'
 
@@ -17,10 +18,11 @@ function Home() {
       style={{ marginTop: 50 }}
       renderItem={(item) => (
       <List.Item>
+        <Link to={"/games/" + item.id}>
         <Card hoverable style={{ width: 200, borderColor: "#202020", backgroundColor: "#202020" }}
           cover={<img src={"https://localhost:7017" + item.imageRelativePath}/>}>
           <Card.Meta title={item.name} description={
-            <Typography.Paragraph style={{ marginBottom: 20 }} ellipsis={{ rows: 4, expandable: "collapsible"}}>
+            <Typography.Paragraph style={{ marginBottom: 20 }} ellipsis={{ rows: 4, expandable: false}}>
               {item.shortDescription}
             </Typography.Paragraph>}
           />
@@ -35,6 +37,7 @@ function Home() {
             {item.releaseDate.substr(0, 10)}
           </Typography.Paragraph>
         </Card>
+        </Link>
       </List.Item>)}>
     </List>
     </>
