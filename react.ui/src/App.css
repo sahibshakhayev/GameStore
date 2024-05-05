@@ -1,7 +1,7 @@
 #root {
   width: 100%;
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 0;
   text-align: center;
 }
 
@@ -22,6 +22,16 @@ header{
 
 .nav-text:hover{
   color: #2f9dbe;
+}
+
+.profile{
+  font-weight: 500;
+  color: #92f8ff;
+}
+
+.profile:hover{
+  text-shadow: 0 0 10px #c9f3ff;
+  color: #ffffff;
 }
 
 .main-logo{
@@ -47,10 +57,9 @@ header{
 /*                           */
 
 .footer-container {
-  margin: -1rem -2rem 0;
-  position: fixed;
-  width: 100%;
-  padding: 10px 100px;
+  margin: 0 -2rem;
+  position: static;
+  padding: 20px;
   background-color: #202020;
   color: #FFFFFF;
   bottom: 0;
