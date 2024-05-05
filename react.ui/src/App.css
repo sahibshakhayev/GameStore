@@ -54,12 +54,17 @@ header{
   color: black;
 }
 
+.last{
+  margin-bottom: 200px;
+}
+
 /*                           */
 
 .footer-container {
   margin: 0 -2rem;
-  position: static;
-  padding: 20px;
+  width: 100%;
+  padding: 20px 0 0px;
+  position: fixed;
   background-color: #202020;
   color: #FFFFFF;
   bottom: 0;

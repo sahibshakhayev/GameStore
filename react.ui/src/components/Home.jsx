@@ -10,6 +10,7 @@ function Home() {
     <>
     <Typography.Title style={{ marginTop: 65 }}>BESTRATED GAMES</Typography.Title>
     <List
+      className="last"
       grid={{ gutter: 16, column: 5 }}
       loading={{spinning: isLoading,
       indicator: <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/>}}

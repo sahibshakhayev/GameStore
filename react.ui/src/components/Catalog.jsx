@@ -1,4 +1,4 @@
-import { Card, List, Typography, Input, Flex, Select } from "antd"
+import { Card, List, Typography, Input, Flex, Select, InputNumber } from "antd"
 import { Link } from "react-router-dom"
 import { LoadingOutlined } from '@ant-design/icons'
 import { useGetAllGamesQuery, useGetByGenreGamesQuery } from "../redux/apiGames"
@@ -10,27 +10,34 @@ const { Search } = Input;
 function Catalog() {
   let [ genreId, setGenreId] = useState(null);
 
-  let [ params, setParams ] = useState({ pageIndex: 1, pageSize: 5, search: "" });
+  let [ params, setParams ] = useState({ pageIndex: 1, pageSize: 5, minPrice: 0, maxPrice: 1000 });
+  let { data: allGenres, isLoading } = useGetAllGenresQuery();
   let { data: allGames, isFetching } = (genreId == null)? useGetAllGamesQuery(params) : useGetByGenreGamesQuery(genreId);
-  let { data: allGenres} = useGetAllGenresQuery();
 
   let [ pageI, setPageIndex ] = useState(params.pageIndex);
   let [ pageS, setPageSize ] = useState(params.pageSize);
-  let [ searcH, setSearch ] = useState(params.search);
+  let [ minP, setMinPrice ] = useState(params.minPrice);
+  let [ maxP, setMaxPrice ] = useState(params.maxPrice);
 
   useEffect(() => {
-    setParams({ pageIndex: pageI, pageSize: pageS, search: searcH });
-    console.log(searcH);
-    console.log(params.search);
-  }, [pageI, searcH]);
+    setParams({ pageIndex: pageI, pageSize: pageS, minPrice: minP, maxPrice: maxP });
+  }, [pageI, minP, maxP]);
 
   return (
     <>
     <Flex justify='space-between' style={{ marginTop: 65 }}>
       <Typography.Title>ALL GAMES</Typography.Title>
       <Flex>
-        <Search onSearch={(value, ev, info) => {(info.source == "input")? setSearch(value) : 0}}
-          placeholder="Search" allowClear className="catalog-search" style={{ width: 200, marginTop: 7 }}/>
+        <Typography.Text style={{ fontSize: 20, margin: "7px 7px 0" }}>Minimum price:</Typography.Text>
+        <InputNumber defaultValue={0} formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          prefix="$" min={0} onPressEnter={(e) => { setMinPrice(e.target.value) }}
+          controls={false}
+          style={{ height: 'min-content', padding: "0 5px", marginTop: 7 }}/>
+        <Typography.Text style={{ fontSize: 20, margin: "7px 7px 0 20px" }}>Maximum price:</Typography.Text>
+        <InputNumber defaultValue={1000} formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          prefix="$" min={0} onPressEnter={(e) => { setMaxPrice(e.target.value) }}
+          controls={false}
+          style={{ height: 'min-content', padding: "0 5px", margin: "7px 0 0 5px" }}/>
         <Select
           showSearch
           onSelect={(value, option) => { setGenreId(option.key); }}
@@ -41,11 +48,12 @@ function Catalog() {
           filterSort={(optionA, optionB) =>
             (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
           }
-          options={isFetching? [] : allGenres.map((item) => ({ label: item.name, value: item.name, key: item.id }))}
+          options={isLoading? [] : allGenres.map((item) => ({ label: item.name, value: item.name, key: item.id }))}
         />
       </Flex>
     </Flex>
     {isFetching? <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/> : <List
+      className="last"
       grid={{ gutter: 16, column: 5 }}
       loading={{ spinning: isFetching,
       indicator: <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/>}}

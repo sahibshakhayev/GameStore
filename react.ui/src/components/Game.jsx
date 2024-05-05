@@ -39,7 +39,7 @@ function Game() {
                 )}
               </Space>
             </Flex>
-            <Rate disabled allowHalf style={{ padding: "20px 0" }} defaultValue={data.usersScore}/>
+            <Rate allowHalf style={{ padding: "20px 0" }} defaultValue={data.usersScore}/>
             <Flex justify="center" className="platforms">
               <Typography.Text style={{ fontSize: 16, color: "#BBB", paddingRight: 10 }}>Platforms: </Typography.Text>
               <Space split={<Divider type="vertical"/>}>
@@ -62,7 +62,7 @@ function Game() {
               <Typography.Text style={{ fontSize: 50, textShadow: "#999955 0 0 25px" }}>
                 {data.price + "$"}
               </Typography.Text>
-              <Button type="primary" style={{ height: "100%", fontSize: 40, padding: "0 50px" }}>To Cart</Button>
+              <Button type="primary" style={{ height: "100%", width: "min-content", fontSize: 40, padding: "0 60px" }}>To Cart</Button>
             </Flex>
             <Typography.Text style={{ fontSize: 27, fontWeight: 500, textAlign: "start", margin: "10px 0 0" }}>Description:</Typography.Text>
             <Typography.Text style={{ fontSize: 20, textAlign: "justify"}}>{data.description}</Typography.Text>
