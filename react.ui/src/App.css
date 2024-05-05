@@ -24,6 +24,16 @@ header{
   color: #2f9dbe;
 }
 
+.profile{
+  font-weight: 500;
+  color: #92f8ff;
+}
+
+.profile:hover{
+  text-shadow: 0 0 10px #c9f3ff;
+  color: #ffffff;
+}
+
 .main-logo{
   height: 65px;
   margin-top: -8px;

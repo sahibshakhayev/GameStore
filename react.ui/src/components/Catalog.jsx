@@ -22,7 +22,7 @@ function Catalog() {
     setParams({ pageIndex: pageI, pageSize: pageS, search: searcH });
     console.log(searcH);
     console.log(params.search);
-  }, [pageI, searcH])
+  }, [pageI, searcH]);
 
   return (
     <>

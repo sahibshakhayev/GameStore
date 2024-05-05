@@ -1,8 +1,8 @@
 import { useGetByIdGamesQuery } from "../redux/apiGames"
 import { useParams } from "react-router-dom";
-import { Image, Flex, Typography, Rate, Divider, Space, Button } from "antd";
+import { Image, Flex, Typography, Rate, Divider, Space, Button } from "antd"
 import { LoadingOutlined } from '@ant-design/icons'
-import { format } from "date-fns";
+import { format } from "date-fns"
 
 function Game() {
   let { gameId } = useParams();

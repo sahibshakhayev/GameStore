@@ -1,15 +1,32 @@
+*{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+a{
+  text-decoration: none;
+  color: #92f8ff;
+}
+
+a:hover{
+  text-shadow: 0 0 10px #c9f3ff;
+  color: #ffffff;
+}
+
+p, h2{
+  padding: 15px;
+}
+
 .container {
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
-  border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #242424;
+  background-color: #202020;
 }
 
 .form-group {
@@ -23,7 +40,6 @@ input[type="password"] {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #ccc;
   margin-bottom: 10px;
 }
 
@@ -31,25 +47,17 @@ button {
   width: calc(100% - 20px);
   padding: 10px;
   font-size: 16px;
+  font-weight: 700;
   border-radius: 5px;
   border: none;
-  background-color: #007bff;
+  background-color: #2a8ba8;
   color: #fff;
   cursor: pointer;
   margin-top: 10px;
 }
 
 button:hover {
-  background-color: #0056b3;
-}
-
-.link {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
+  background-color: #35a4c5;
 }
 
 .text-center {
