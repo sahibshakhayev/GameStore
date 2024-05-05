@@ -4,10 +4,15 @@ export const gameApi = gameStoreApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllGames: builder.query({
         query: (args) => {
-          const {pageIndex, pageSize, gSearch} = args;
+          const {pageIndex, pageSize, minPrice, maxPrice} = args;
           return {
             url: `Games`,
-            params: { page_index: pageIndex, page_size: pageSize, search: gSearch}
+            params: {
+              page_index: pageIndex,
+              page_size: pageSize,
+              minPrice,
+              maxPrice
+            }
         }},
     }),
     getBestratedGames: builder.query({

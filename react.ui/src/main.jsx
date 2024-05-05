@@ -16,6 +16,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       components: {
         Input: {
           colorText: "#202020",
+          fontSize: "20px",
+          hoverBorderColor: "#5bae71",
+          activeBorderColor: "#5bae71",
+          colorPrimary: "#2f9dbe",
+          colorPrimaryBorder: "#2f9dbe",
+          colorPrimaryHover: "#2f9dbe",
+          colorPrimaryActive: "#2f9dbe"
+        },
+        InputNumber: {
+          colorText: "#202020",
+          fontSize: "20px",
           hoverBorderColor: "#5bae71",
           activeBorderColor: "#5bae71",
           colorPrimary: "#2f9dbe",
@@ -40,6 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           optionActiveBg: "#333",
           optionSelectedBg: "#444",
           optionSelectedFontWeight: 500,
+          fontSize: "20px",
           colorTextPlaceholder: "#999",
           colorBorder: "#202020",
           colorPrimary: "#2f9dbe",
