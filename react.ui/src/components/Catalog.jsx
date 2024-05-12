@@ -28,20 +28,21 @@ function Catalog() {
     <Flex justify='space-between' style={{ marginTop: 65 }}>
       <Typography.Title>ALL GAMES</Typography.Title>
       <Flex>
-        <Typography.Text style={{ fontSize: 20, margin: "7px 7px 0" }}>Minimum price:</Typography.Text>
+        <Typography.Text style={{ textWrap: "nowrap", fontSize: 20, margin: "7px 7px 0" }}>Minimum price:</Typography.Text>
         <InputNumber defaultValue={0} formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           prefix="$" min={0} onPressEnter={(e) => { setMinPrice(e.target.value) }}
           controls={false}
           style={{ height: 'min-content', padding: "0 5px", marginTop: 7 }}/>
-        <Typography.Text style={{ fontSize: 20, margin: "7px 7px 0 20px" }}>Maximum price:</Typography.Text>
+        <Typography.Text style={{ textWrap: "nowrap", fontSize: 20, margin: "7px 7px 0 20px" }}>Maximum price:</Typography.Text>
         <InputNumber defaultValue={1000} formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           prefix="$" min={0} onPressEnter={(e) => { setMaxPrice(e.target.value) }}
           controls={false}
           style={{ height: 'min-content', padding: "0 5px", margin: "7px 0 0 5px" }}/>
         <Select
           showSearch
+          dropdownStyle={{ padding: 10 }}
           onSelect={(value, option) => { setGenreId(option.key); }}
-          style={{ width: 150, margin: "7px 0 0 15px" }}
+          style={{ width: "18%", height: "40px", margin: "3px 0 0 15px" }}
           placeholder="Genre"
           optionFilterProp="children"
           filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -52,9 +53,10 @@ function Catalog() {
         />
       </Flex>
     </Flex>
-    {isFetching? <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/> : <List
+    <div style={{ textAlign: "center" }}>
+    {isFetching? <LoadingOutlined style={{ fontSize: 43, position: "fixed"}} spin/> : <List
       className="last"
-      grid={{ gutter: 16, column: 5 }}
+      grid={{ gutter: 16, column: pageS }}
       loading={{ spinning: isFetching,
       indicator: <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/>}}
       pagination={(allGames.items == undefined)?
@@ -66,31 +68,33 @@ function Catalog() {
         total: params.pageSize * allGames.totalPages,
         showSizeChanger: false }}
       dataSource={(allGames.items == undefined)? allGames : allGames.items}
-      style={{ marginTop: 50 }}
+      style={{ marginTop: 50}}
       renderItem={(item) => (
       <List.Item>
         <Link to={"/games/" + item.id}>
         <Card hoverable style={{ width: 200, borderColor: "#202020", backgroundColor: "#202020" }}
           cover={<img src={"https://localhost:7017" + item.imageRelativePath}/>}>
-          <Card.Meta title={item.name} description={
+          <Card.Meta description={<>
+            <Typography.Title level={5}>{item.name}</Typography.Title>
             <Typography.Paragraph style={{ marginBottom: 15 }} ellipsis={{ rows: 4, expandable: false }}>
               {item.shortDescription}
-            </Typography.Paragraph>}
+            </Typography.Paragraph></>}
           />
           <Typography.Paragraph style={{
             color: "white", fontSize: 24, textAlign:
             "center", marginTop: 0, marginBottom: 15,
             textShadow: "#999955 0 0 25px" }}>
             {item.price + "$"}
-          </Typography.Paragraph>          
-          <Typography.Paragraph style={{ color: "#999", fontSize: 12, textAlign: "end", marginBottom: -15, marginRight: -10 }}>
+          </Typography.Paragraph>
+          <Typography.Paragraph style={{ color: "#999", fontSize: 12, textAlign: "end", bottom: 0, right: 15, position: "absolute" }}>
             {item.releaseDate.substr(0, 10)}
           </Typography.Paragraph>
         </Card>
         </Link>
       </List.Item>)}>
     </List>}
-    </>    
+    </div>
+    </>
   )
 }
   

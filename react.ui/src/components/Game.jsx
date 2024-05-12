@@ -11,15 +11,15 @@ function Game() {
   return (
     <Flex style={{ marginTop: 50, padding: "0 50px" }}>
       {isFetching? <LoadingOutlined style={{ fontSize: 43, position: "fixed" }} spin/> :
-      <Flex justify="center" style={{ width: "100%", backgroundColor: "#202020" }} gap="large" vertical>
+      <Flex justify="center" style={{ width: "100%", backgroundColor: "#202020", paddingBottom: 50 }} gap="large" vertical>
         <Flex>
-          <Flex style={{ width: "70%"}}>
+          <Flex style={{ width: "70%" }}>
             <Image
               width="100%"
               src={"https://localhost:7017" + data.coverImageRelativePath}
             />
           </Flex>
-          <Flex style={{ width: "30%", padding: "40px 15px 0" }} vertical>
+          <Flex style={{ width: "30%", padding: "40px 15px 0", textAlign: "center" }} vertical>
             <Typography.Title style={{ fontWeight: "bold" }}>{data.name}</Typography.Title>
             <Typography.Paragraph style={{ fontSize: 16, color: "#fff" }}>{data.shortDescription}</Typography.Paragraph>
             <Divider style={{ margin: "5px 0 15px" }}/>

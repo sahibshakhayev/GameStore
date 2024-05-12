@@ -7,7 +7,7 @@ function Home() {
   let { data: brGames, isLoading, isError } = useGetBestratedGamesQuery();
 
   return (
-    <>
+    <div style={{ textAlign: "center" }}>
     <Typography.Title style={{ marginTop: 65 }}>BESTRATED GAMES</Typography.Title>
     <List
       className="last"
@@ -22,10 +22,11 @@ function Home() {
         <Link to={"/games/" + item.id}>
         <Card hoverable style={{ width: 200, borderColor: "#202020", backgroundColor: "#202020" }}
           cover={<img src={"https://localhost:7017" + item.imageRelativePath}/>}>
-          <Card.Meta title={item.name} description={
-            <Typography.Paragraph style={{ marginBottom: 20 }} ellipsis={{ rows: 4, expandable: false}}>
+          <Card.Meta description={<>
+            <Typography.Title level={5}>{item.name}</Typography.Title>
+            <Typography.Paragraph style={{ marginBottom: 15 }} ellipsis={{ rows: 4, expandable: false }}>
               {item.shortDescription}
-            </Typography.Paragraph>}
+            </Typography.Paragraph></>}
           />
           <Typography.Paragraph style={{
             color: "white", fontSize: 24, textAlign:
@@ -34,14 +35,14 @@ function Home() {
             {item.price + "$"}
           </Typography.Paragraph>
           <Rate disabled allowHalf defaultValue={item.usersScore} style={{ marginBottom: 15 }}/>
-          <Typography.Paragraph style={{ color: "#999", fontSize: 12, textAlign: "end", marginBottom: -15, marginRight: -10 }}>
+          <Typography.Paragraph style={{ color: "#999", fontSize: 12, textAlign: "end", bottom: 0, right: 15, position: "absolute" }}>
             {item.releaseDate.substr(0, 10)}
           </Typography.Paragraph>
         </Card>
         </Link>
       </List.Item>)}>
     </List>
-    </>
+    </div>
   )
 }
   

@@ -2,7 +2,6 @@
   width: 100%;
   margin: 0 auto;
   padding: 1rem 2rem 0;
-  text-align: center;
 }
 
 header{
@@ -67,6 +66,7 @@ header{
   position: fixed;
   background-color: #202020;
   color: #FFFFFF;
+  text-align: center;
   bottom: 0;
 }
 
